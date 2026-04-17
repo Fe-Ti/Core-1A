@@ -47,7 +47,7 @@
 `define select_flag_start `select_mem_size_start+`select_mem_size_bitcnt
 `define select_flag_bitcnt 3
 `define select_aluop_start `select_flag_start+`select_flag_bitcnt
-`define select_aluop_bitcnt 9
+`define select_aluop_bitcnt 10
 
 // Calculate control bus total width
 `define CONTROL_BUS_WIDTH `select_aluop_start+`select_aluop_bitcnt-1

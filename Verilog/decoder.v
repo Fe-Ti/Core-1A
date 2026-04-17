@@ -168,7 +168,7 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     //  magma64edrh  Преобразование \(G[k](a_1, a_0)\) (старший ключ)        +      func3=0x7
     // two are of type I with ignored constant and the latter are R-type ones
     assign control_bus[`select_aluop_start+`select_aluop_bitcnt-1:`select_aluop_start] =
-        {custom1, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
+        {custom1, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
 
     // We don't want to write anything into RD when branching or writing to mem
     assign control_bus[`regfile_we] = ~|{BRANCH, STORE, STORE_FP};
