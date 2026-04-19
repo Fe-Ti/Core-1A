@@ -1,34 +1,11 @@
+// Copyright 2024-2025 Fe-Ti aka Tim Kravchenko
+//
+// Main CPU module
+// Version:  1
+// Codename: Shikra (lat: Tachyspiza badia)
 
 
-module elll (
-    input wire [64:1] ls_block_half,
-    output wire [8:1] elll_result,
-);
-// c0 1     
-// c1 148   
-// c2 32    
-// c3 133   
-// c4 16    
-// c5 194   
-// c6 192   
-// c7 1     
-wire [8:1] ca_0 = 0x;
-wire [8:1] ca_1 = ;
-wire [8:1] ca_2 = ;
-wire [8:1] ca_3 = ;
-wire [8:1] ca_4 = ;
-wire [8:1] ca_5 = ;
-wire [8:1] ca_6 = ;
-wire [8:1] ca_7 = ;
-
-
-assign elll_result = 
-
-endmodule
-
-module ellh ();
-
-endmodule
+`include "lib-kuznk/libtop.v"
 
 
 module alu(
