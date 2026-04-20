@@ -1,5 +1,13 @@
-`include "../polymul.v"
+// Copyright 2024-2025 Fe-Ti aka Tim Kravchenko
+//
+// Kuznyechik hardware blocks lib
+// 
+// Polynomial multiply (8-bit) test bench
+// Version:  1
+//
+`include "../lib-kuznk/polymul.v"
 `default_nettype none
+`timescale 1ns/1ns
 
 module tb_polymul;
 

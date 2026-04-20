@@ -70,19 +70,24 @@ def calculate_ell(data_block):
         c_i = np.array([int(i) for i in bin(c_i)[2:].zfill(8)], dtype=np.int8)
 
         mul_res = polymul_ref(a, c_i)
-        print(f"{a} ---> {mul_res}")
+        # print(f"{a} ---> {mul_res}")
         # print(f"c_i = {c_i}, a = {a_}")
         r ^= mul_res
         # print(f"result = {r}\n")
     return r
 
-
+# reference R transforms
 def calculate_R(data_block):
     ell_res = calculate_ell(data_block=data_block.copy())
     return np.concatenate([ell_res, data_block[:120]])
 
 
+def calculate_iR(data_block):
+    ell_res = calculate_ell(data_block=np.concatenate([data_block[8:],data_block[:8]]).copy())
+    return np.concatenate([data_block[8:], ell_res])
 
+
+### Helper functions
 def convert_hex_to_bit_string(hex_string):
     bin_string = ''
     for h in hex_string:
@@ -93,41 +98,67 @@ def get_binary_numpy_array_from_hex_str(hex_string):
     bin_string = convert_hex_to_bit_string(hex_string)
     return np.array([int(i) for i in bin_string], dtype=np.int8)
 
+def write_bin_line(ofile, np_bin_array):
+    ofile.write(str(np_bin_array.tolist())[1:-1].replace(' ','').replace(',','')+'\n')
 
-ITER_COUNT = 3
-DO_RANDOM = False
+
+# ITER_COUNT = 5
+ITER_COUNT = 20
+# DO_RANDOM = False # check up with gost samlples
+DO_RANDOM = True
 CONTROL_SAMPLE = get_binary_numpy_array_from_hex_str(
     "00000000000000000000000000000100"
 )
-CONTROL_REF = get_binary_numpy_array_from_hex_str(
-    "94000000000000000000000000000001"
-)
+CONTROL_REF = [get_binary_numpy_array_from_hex_str(i) for i in [
+    "",
+    "94000000000000000000000000000001",
+    "a5940000000000000000000000000000",
+    "64a59400000000000000000000000000",
+    "0d64a594000000000000000000000000"
+]]
+
+print("R(a) transform tests")
 # for c_i in C:
 # with open("tb_polymul_results.txt", 'w') as ofile:
-first_run = True
-for i in range(ITER_COUNT):
-    # print(bin(c_i)[2:].zfill(8))
-    print()
-    if DO_RANDOM:
-        data_block = np.random.randint(0, 2, size=128, dtype=np.int8)
-    else:
-        if first_run:
-            print("Control sample...")
-            data_block = CONTROL_SAMPLE
-            first_run = False
+source_data_ofile = open("tb_r-transform_source_blocks.txt", 'w')
+fwd_results_ofile = open("tb_r-transform_fwdR_results.txt", 'w')
+# inv_results_ofile = open("tb_r-transform_invR_results.txt", 'w')
+try:
+    first_run = True
+    for i in range(ITER_COUNT):
+        # print(bin(c_i)[2:].zfill(8))
+        print()
+        if DO_RANDOM:
+            data_block = np.random.randint(0, 2, size=128, dtype=np.int8)
         else:
-            print("Control REF", CONTROL_REF )
-            print("R result:", result)
-            fail_cnt = sum(CONTROL_REF != result)
-            print("Fail count:", fail_cnt, "Congrats! :)"*(1-fail_cnt) )
-            break
-            # data_block = result
-    print("Source data block:", data_block)
-    result = calculate_R(data_block)
-    # print("R(a) Result: ", result)
+            if first_run:
+                print("Using control samples from GOST 34.12-2018...")
+                data_block = CONTROL_SAMPLE
+                first_run = False
+            else:
+                fail_cnt = int(sum(CONTROL_REF[i] != result))
+                inverse_fail_cnt = int(sum(inv_result != data_block))
+                if fail_cnt > 0:
+                    print("Control REF", CONTROL_REF[i] )
+                    print("R result:", result)
+                print(f"Test #{i}. Fail count:", fail_cnt, "and", inverse_fail_cnt, "Congrats! :)"*((fail_cnt + inverse_fail_cnt) == 0) )
+                # break
+                data_block = result
+        # print("Source data block:", data_block)
+        result = np.int8(calculate_R(data_block))
+        inv_result = calculate_iR(result)
 
-    # ofile.write(str(r)[1:-1].replace(' ','')+'\n')
+        # Save data to files
+        write_bin_line(source_data_ofile, data_block)
+        write_bin_line(fwd_results_ofile, result)
+        # write_bin_line(inv_results_ofile, inv_result)
+        # print("R(a) Result: ", result)
 
+        # ofile.write(str(r)[1:-1].replace(' ','')+'\n')
+finally:
+    source_data_ofile.close()
+    fwd_results_ofile.close()
+    # inv_results_ofile.close()
 
 
 

@@ -1,3 +1,11 @@
+// Copyright 2024-2025 Fe-Ti aka Tim Kravchenko
+//
+// Kuznyechik hardware blocks lib
+// 
+// Polynomial multiplication
+// Version:  1
+//
+`timescale 1ns/1ns
 
 module polymul #(parameter  WIDTH = 8) (input wire [WIDTH-1:0] a_in, b_in,
     input wire [WIDTH:0] prim_poly,

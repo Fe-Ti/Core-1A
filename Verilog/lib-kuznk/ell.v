@@ -22,6 +22,7 @@
 // c13   133 
 // c14   32  
 // c15   148
+`timescale 1ns/1ns
 `include "polymul.v"
 
 `define PRIMITIVE_POLY_KUZNK 9'b111000011

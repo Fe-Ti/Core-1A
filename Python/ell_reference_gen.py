@@ -78,18 +78,18 @@ def calculate_ell(data_block):
 
 
 
-ITER_COUNT = 3
+ITER_COUNT = 20
 # for c_i in C:
-# with open("tb_polymul_results.txt", 'w') as ofile:
-
-for i in range(ITER_COUNT):
-    # print(bin(c_i)[2:].zfill(8))
-    print()
-    data_block = np.random.randint(0, 2, size=128, dtype=np.int8)
-    print("Source data block:", data_block)
-    r = calculate_ell(data_block)
-    print("Ell Result: ", r)
-    # ofile.write(str(r)[1:-1].replace(' ','')+'\n')
+with open("tb_ell_datablock_input.txt", 'w') as data_ofile:
+    with open("tb_ell_results.txt", 'w') as ofile:
+        for i in range(ITER_COUNT):
+            # print(bin(c_i)[2:].zfill(8))
+            data_block = np.random.randint(0, 2, size=128, dtype=np.int8)
+            data_ofile.write(str(data_block.tolist())[1:-1].replace(' ','').replace(',','')+'\n')
+            print("Source data block:", data_block)
+            r = calculate_ell(data_block)
+            print("Ell Result: ", r)
+            ofile.write(str(r.tolist())[1:-1].replace(' ','').replace(',','')+'\n')
 
 
 
