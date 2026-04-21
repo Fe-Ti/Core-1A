@@ -2,23 +2,24 @@
 //
 // Kuznyechik hardware blocks lib
 // 
-// S-box transform blocks
+// Inverse S-box transform blocks
 // Version:  1
 //
-// S(a) = pi(a_15)||...||pi(a_0)
+// S^{-1}(a) = pi^{-1}(a_15)||...||pi{-1}(a_0)
 //  
 
-`define FALLBACK_SBOX
+//// TODO: implement sbox better
+// `define FALLBACK_SBOX_INV
 
-`ifdef FALLBACK_SBOX
-// `include "forward_pi.v"
-`include "inverse_pi.v"
-`else
-// `include "clever_sbox.v"
-`include "clever_sbox_inv.v"
-`endif
+// `ifdef FALLBACK_SBOX_INV
+// // `include "forward_pi.v"
+// `include "inverse_pi.v"
+// `else
+// // `include "clever_sbox.v"
+// `include "clever_sbox_inv.v"
+// `endif
 
-module sbox32 (
+module sbox32_inverse (
     input wire [32:1] data_block_in,
     output wire [32:1] data_block_out
 );
@@ -33,15 +34,15 @@ generate
 endgenerate
 endmodule
 
-module sbox64 (
+module sbox64_inverse (
     input wire [64:1] data_block_in,
     output wire [64:1] data_block_out
 );
-sbox32 ms_half_transformer (
+sbox32_inverse ms_half_transformer (
     .data_block_in (data_block_in[64:33]),
     .data_block_out (data_block_out[64:33])
 );
-sbox32 ls_half_transformer (
+sbox32_inverse ls_half_transformer (
     .data_block_in (data_block_in[32:1]),
     .data_block_out (data_block_out[32:1])
 );

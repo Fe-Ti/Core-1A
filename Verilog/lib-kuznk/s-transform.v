@@ -8,15 +8,16 @@
 // S(a) = pi(a_15)||...||pi(a_0)
 //  
 
-`define FALLBACK_SBOX
+//// TODO: implement sbox better
+// `define FALLBACK_SBOX
 
-`ifdef FALLBACK_SBOX
-`include "forward_pi.v"
-// `include "inverse_pi.v"
-`else
-`include "clever_sbox.v"
-// `include "clever_sbox_inv.v"
-`endif
+// `ifdef FALLBACK_SBOX
+// `include "forward_pi.v"
+// // `include "inverse_pi.v"
+// `else
+// `include "clever_sbox.v"
+// // `include "clever_sbox_inv.v"
+// `endif
 
 module sbox32 (
     input wire [32:1] data_block_in,

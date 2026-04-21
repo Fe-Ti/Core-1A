@@ -7,7 +7,8 @@
 `define LIB_KUZNK
 
 `include "r-transform.v"
-
-
+`include "r-transform-inverse.v"
+`include "s-transform.v"
+`include "s-transform-inverse.v"
 
 `endif
