@@ -11,11 +11,11 @@
 `define FALLBACK_SBOX
 
 `ifdef FALLBACK_SBOX
-`include "forward_pi.v"
-// `include "inverse_pi.v"
+// `include "forward_pi.v"
+`include "inverse_pi.v"
 `else
-`include "clever_sbox.v"
-// `include "clever_sbox_inv.v"
+// `include "clever_sbox.v"
+`include "clever_sbox_inv.v"
 `endif
 
 module sbox32 (
@@ -25,7 +25,7 @@ module sbox32 (
 genvar i;
 generate
     for (i = 0; i < 4; i = i + 1) begin : pi_byte_transformers
-        forward_pi pibyte_transformer (
+        inverse_pi pibyte_transformer (
             .byte_in(data_block_in[(i+1)*8:i*8+1]),
             .byte_out(data_block_out[(i+1)*8:i*8+1])
         );
