@@ -9,6 +9,7 @@
 `timescale 1ns/1ns
 
 `include "../lib-kuznk/r-transform.v"
+`include "../lib-kuznk/r-transform-inverse.v"
 `default_nettype none
 
 module tb_rtransform;

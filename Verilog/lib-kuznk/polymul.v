@@ -7,13 +7,15 @@
 //
 `timescale 1ns/1ns
 
+`ifndef KUZNK_POLYMUL
+`define KUZNK_POLYMUL
 module polymul #(parameter  WIDTH = 8) (input wire [WIDTH-1:0] a_in, b_in,
     input wire [WIDTH:0] prim_poly,
     output wire [WIDTH-1:0] result_out);
 reg [WIDTH-1:0] a, b, result;
 reg msbit;
 
-always @(*) begin
+always @(*) begin : polymul_comb_logic_generator
     integer i;
     result = 0;
     a = a_in;
@@ -23,14 +25,16 @@ always @(*) begin
             result = result ^ a;
         end
         msbit = a[WIDTH-1];
-        a = {a[WIDTH-2:0], 1'b0};
+        a = a << 1; //{a[WIDTH-2:0], 1'b0};
         if (msbit) begin
             a = a ^ prim_poly[WIDTH-1:0];
         end
-        b = {1'b0, b[WIDTH-1:1]};
+        b = b >> 1;//{1'b0, b[WIDTH-1:1]};
     end
 end
 
 assign result_out = result;
 
 endmodule
+
+`endif

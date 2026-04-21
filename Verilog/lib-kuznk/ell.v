@@ -25,6 +25,8 @@
 `timescale 1ns/1ns
 `include "polymul.v"
 
+`ifndef KUZNK_ELL_TRANSFORM
+`define KUZNK_ELL_TRANSFORM
 `define PRIMITIVE_POLY_KUZNK 9'b111000011
 
 module elll (
@@ -131,3 +133,4 @@ elll ell_low_part (
 assign ell_result = high_part_sum ^ low_part_sum;
 
 endmodule
+`endif
