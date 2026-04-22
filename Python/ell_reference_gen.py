@@ -1,5 +1,5 @@
 # Copyright 2026 Fe-Ti
-# C_i constant to scheme generator
+# Ell reference values generator
 
 import numpy as np
 

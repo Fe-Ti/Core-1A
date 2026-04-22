@@ -1,6 +1,6 @@
 # Copyright 2026 Fe-Ti aka Tim Kravchenko
 #
-# Magma Pi module generator lib
+# Magma Pi module generator script
 # 
 # Nonlinear bijection
 # Version:  1

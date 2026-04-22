@@ -1,3 +1,11 @@
+# Copyright 2026 Fe-Ti aka Tim Kravchenko
+#
+# Kuznyechik Pi module generator script
+# 
+# Nonlinear bijection
+# Version:  1
+#
+
 fwdpi_mod_name = "forward_pi"
 invpi_mod_name = "inverse_pi"
 
