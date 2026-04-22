@@ -19,6 +19,9 @@
 // `include "clever_sbox_inv.v"
 // `endif
 
+`timescale 1ns/1ns
+
+
 module sbox32_inverse (
     input wire [32:1] data_block_in,
     output wire [32:1] data_block_out

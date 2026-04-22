@@ -11,6 +11,8 @@ invpi_mod_name = "inverse_pi"
 
 # Wire array variant
 KISS_pi_template = """
+`timescale 1ns/1ns
+
 module {mod_name} (
     input wire [8:1] byte_in,
     output wire [8:1] byte_out

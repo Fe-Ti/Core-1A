@@ -1,3 +1,4 @@
+`timescale 1ns/1ns
 
 module inverse_pi (
     input wire [8:1] byte_in,
