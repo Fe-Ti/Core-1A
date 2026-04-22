@@ -1,4 +1,4 @@
-// Copyright 2024-2025 Fe-Ti aka Tim Kravchenko
+// Copyright 2024-2026 Fe-Ti aka Tim Kravchenko
 //
 // Magma hardware blocks lib
 // 
@@ -14,6 +14,6 @@
 `ifndef LIB_MAGMA
 `define LIB_MAGMA
 
-`include ""
+`include "gk_magma.v"
 
 `endif

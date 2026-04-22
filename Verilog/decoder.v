@@ -1,4 +1,4 @@
-// Copyright 2024-2025 Fe-Ti aka Tim Kravchenko
+// Copyright 2024-2026 Fe-Ti aka Tim Kravchenko
 //
 // Main CPU module
 // Version:  1
