@@ -177,9 +177,9 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     wire enable_rs1 = ~|{is_type_J, is_type_U}; // no RS1 when JAL and LUI/AUIPC
     wire enable_rs2 = ~|{is_type_I, is_type_J, is_type_U}; // same plus I-type
     wire enable_rd  = control_bus[`regfile_we];
-    assign rs1_addr = instruction[20:16] & {`REG_SELECT_WIDTH{disable_rs1}};
-    assign rs2_addr = instruction[25:21] & {`REG_SELECT_WIDTH{disable_rs2}};
-    assign rd_addr  = instruction[12:8] & {`REG_SELECT_WIDTH{disable_rd}};
+    assign rs1_addr = instruction[20:16] & {`REG_SELECT_WIDTH{enable_rs1}};
+    assign rs2_addr = instruction[25:21] & {`REG_SELECT_WIDTH{enable_rs2}};
+    assign rd_addr  = instruction[12:8] & {`REG_SELECT_WIDTH{enable_rd}};
 
     // Memory operations
     assign control_bus[`mem_w] = STORE | STORE_FP;

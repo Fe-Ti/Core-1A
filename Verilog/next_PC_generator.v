@@ -14,7 +14,7 @@ module next_PC_generator(
     input wire do_jump_or_branch,
     output wire [`XLEN:1] next_PC
 );
-    wire [`XLEN:1] step = do_jump_or_branch ? imm : 0x04;
+    wire [`XLEN:1] step = do_jump_or_branch ? imm : 'd4;
     wire [`XLEN:1] source_address = is_JALR ? rs1 : current_PC;
     assign next_PC = source_address + step;
 endmodule

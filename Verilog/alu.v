@@ -4,7 +4,7 @@
 // Version:  1
 // Codename: Shikra (lat: Tachyspiza badia)
 
-
+`include "constants.v"
 `include "lib-kuznk/libtop.v"
 
 

@@ -13,11 +13,11 @@ module register_file(
     input wire clk,
     output wire [`XLEN:1] rs1, rs2
 );
-    reg [`XLEN:0] x[31:0];
+    reg [`XLEN:1] x[31:0];
     always @(posedge clk) begin
         if (write_enable)
             x[rd_addr] <= input_data;
     end
-    assign rs1[`XLEN:1] = (rs1_addr != 0) : x[rs1_addr] : 0x0;
-    assign rs2[`XLEN:1] = (rs2_addr != 0) : x[rs2_addr] : 0x0;
+    assign rs1[`XLEN:1] = (rs1_addr != 0) ? x[rs1_addr] : 0;
+    assign rs2[`XLEN:1] = (rs2_addr != 0) ? x[rs2_addr] : 0;
 endmodule

@@ -6,7 +6,7 @@
 
 `include "constants.v"
 `include "decoder.v"
-`include "register.v"
+`include "register_file.v"
 `include "next_PC_generator.v"
 `include "alu.v"
 
