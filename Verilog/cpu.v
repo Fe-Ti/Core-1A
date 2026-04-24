@@ -9,13 +9,10 @@
 `include "register_file.v"
 `include "next_PC_generator.v"
 `include "alu.v"
+`include "hazard_solver.v"
 
 `define MEMSIZE_BUS_WIDTH `select_mem_size_bitcnt
 
-// module hazard_solver(
-// );
-
-// endmodule
 
 
 module cpu(
