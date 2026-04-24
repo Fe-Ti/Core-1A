@@ -25,6 +25,8 @@ polymul mul8bit (
     .result_out (result)
 );
 
+wire [5:1] x = 5'b00100;
+wire [5:1] y = 5'b10000;
 
 // initial begin
 //     $dumpfile("tb_.vcd");
