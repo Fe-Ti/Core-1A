@@ -4,6 +4,8 @@
 // Version:  1
 // Codename: Shikra (lat: Tachyspiza badia)
 
+// IDK what this is :)
+`timescale 1ns/1ns
 `include "constants.v"
 
 module brancher (

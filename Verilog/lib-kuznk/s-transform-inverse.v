@@ -13,7 +13,7 @@
 
 // `ifdef FALLBACK_SBOX_INV
 // // `include "forward_pi.v"
-// `include "inverse_pi.v"
+`include "inverse_pi.v"
 // `else
 // // `include "clever_sbox.v"
 // `include "clever_sbox_inv.v"

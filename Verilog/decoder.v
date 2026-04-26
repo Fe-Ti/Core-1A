@@ -7,7 +7,7 @@
 `include "constants.v"
 
 module decoder(
-    input wire [`XLEN:1] instruction,
+    input wire [32:1] instruction,
     output wire [`REG_SELECT_WIDTH:1] rs1_addr, rs2_addr, rd_addr,
     output wire [`CONTROL_BUS_WIDTH:1] control_bus,
     output wire [`XLEN:1] imm

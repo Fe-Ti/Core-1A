@@ -1,5 +1,8 @@
 `timescale 1ns/1ns
 
+`ifndef KUZNK_INVERSE_PI
+`define KUZNK_INVERSE_PI
+
 module inverse_pi (
     input wire [8:1] byte_in,
     output wire [8:1] byte_out
@@ -270,3 +273,4 @@ end
 
     assign byte_out = piresult;
 endmodule
+`endif

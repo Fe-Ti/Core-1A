@@ -14,7 +14,7 @@ module register_file(
     output wire [`XLEN:1] rs1, rs2
 );
     reg [`XLEN:1] x[31:0];
-    always @(posedge clk) begin
+    always @(negedge clk) begin
         if (write_enable)
             x[rd_addr] <= input_data;
     end
@@ -23,25 +23,31 @@ module register_file(
 endmodule
 
 module overrider_block (
-    input wire [`XLEN:1] old_rs1, old_rs2, fwd_ex_rd, fwd_wb_rd,
+    input wire [`XLEN:1] old_rs1, old_rs2,
+                        // fwd_ex_rd,
+                        fwd_wb_rd,
     input wire stage_fd_override_rs1_with_rdwb, stage_fd_override_rs2_with_rdwb,
-               stage_fd_override_rs1_with_rdex, stage_fd_override_rs2_with_rdex,
+            //    stage_fd_override_rs1_with_rdex, stage_fd_override_rs2_with_rdex,
     output wire [`XLEN:1] rs1, rs2
 );
-    wire [`XLEN:1] rs1_wb_overriden = stage_fd_override_rs1_with_rdwb ? fwd_wb_rd : old_rs1;
-    assign rs1 = stage_fd_override_rs1_with_rdex ? fwd_ex_rd : rs1_wb_overriden;
+    // wire [`XLEN:1] rs1_wb_overriden = stage_fd_override_rs1_with_rdwb ? fwd_wb_rd : old_rs1;
+    // assign rs1 = stage_fd_override_rs1_with_rdex ? fwd_ex_rd : rs1_wb_overriden;
+    assign rs1 = stage_fd_override_rs1_with_rdwb ? fwd_wb_rd : old_rs1;
 
-    wire [`XLEN:1] rs2_wb_overriden = stage_fd_override_rs1_with_rdwb ? fwd_wb_rd : old_rs2;
-    assign rs2 = stage_fd_override_rs1_with_rdex ? fwd_ex_rd : rs2_wb_overriden;
+    // wire [`XLEN:1] rs2_wb_overriden = stage_fd_override_rs2_with_rdwb ? fwd_wb_rd : old_rs2;
+    // assign rs2 = stage_fd_override_rs2_with_rdex ? fwd_ex_rd : rs2_wb_overriden;
+    assign rs2 = stage_fd_override_rs2_with_rdwb ? fwd_wb_rd : old_rs2;
 endmodule
 
 module overrider_register_file (
     input wire [`REG_SELECT_WIDTH:1] rs1_addr, rs2_addr, rd_addr,
-    input wire [`XLEN:1] input_data, fwd_ex_rd, fwd_wb_rd,
+    input wire [`XLEN:1] input_data,
+                            // fwd_ex_rd,
+                            fwd_wb_rd,
     input wire write_enable,
     input wire clk,
     input wire stage_fd_override_rs1_with_rdwb, stage_fd_override_rs2_with_rdwb,
-               stage_fd_override_rs1_with_rdex, stage_fd_override_rs2_with_rdex,
+            //    stage_fd_override_rs1_with_rdex, stage_fd_override_rs2_with_rdex,
     output wire [`XLEN:1] rs1, rs2
 );
     wire [`XLEN:1] tmp_rs1, tmp_rs2;
@@ -60,12 +66,12 @@ module overrider_register_file (
     overrider_block ob (
         .old_rs1 (tmp_rs1), 
         .old_rs2 (tmp_rs2), 
-        .fwd_ex_rd (fwd_ex_rd), 
+        // .fwd_ex_rd (fwd_ex_rd), 
         .fwd_wb_rd (fwd_wb_rd),
         .stage_fd_override_rs1_with_rdwb (stage_fd_override_rs1_with_rdwb), 
         .stage_fd_override_rs2_with_rdwb (stage_fd_override_rs2_with_rdwb),
-        .stage_fd_override_rs1_with_rdex (stage_fd_override_rs1_with_rdex), 
-        .stage_fd_override_rs2_with_rdex (stage_fd_override_rs2_with_rdex),
+        // .stage_fd_override_rs1_with_rdex (stage_fd_override_rs1_with_rdex), 
+        // .stage_fd_override_rs2_with_rdex (stage_fd_override_rs2_with_rdex),
         .rs1 (rs1), 
         .rs2 (rs2)
     );

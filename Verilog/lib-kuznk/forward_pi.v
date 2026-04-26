@@ -1,5 +1,7 @@
 `timescale 1ns/1ns
 
+`ifndef KUZNK_FORWARD_PI
+`define KUZNK_FORWARD_PI
 module forward_pi (
     input wire [8:1] byte_in,
     output wire [8:1] byte_out
@@ -270,3 +272,5 @@ end
 
     assign byte_out = piresult;
 endmodule
+
+`endif

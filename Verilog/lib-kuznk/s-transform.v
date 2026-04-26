@@ -12,7 +12,7 @@
 // `define FALLBACK_SBOX
 
 // `ifdef FALLBACK_SBOX
-// `include "forward_pi.v"
+`include "forward_pi.v"
 // // `include "inverse_pi.v"
 // `else
 // `include "clever_sbox.v"
@@ -20,7 +20,6 @@
 // `endif
 
 `timescale 1ns/1ns
-
 
 module sbox32 (
     input wire [32:1] data_block_in,

@@ -10,8 +10,10 @@ fwdpi_mod_name = "forward_pi"
 invpi_mod_name = "inverse_pi"
 
 # Wire array variant
-KISS_pi_template = """
-`timescale 1ns/1ns
+KISS_pi_template = """`timescale 1ns/1ns
+
+`ifndef KUZNK_{mod_name}
+`define KUZNK_{mod_name}
 
 module {mod_name} (
     input wire [8:1] byte_in,
@@ -23,12 +25,17 @@ module {mod_name} (
 
     assign byte_out = pi_table[byte_in];
 endmodule
+`endif
 """
 KISS_table_entry = """    assign pi_table[{num}] = 8'd{val};
 """
 
 # Case variant
-KISS_pi_template = """
+KISS_pi_template = """`timescale 1ns/1ns
+
+`ifndef KUZNK_{mod_name}
+`define KUZNK_{mod_name}
+
 module {mod_name} (
     input wire [8:1] byte_in,
     output wire [8:1] byte_out
@@ -43,6 +50,7 @@ end
 
     assign byte_out = piresult;
 endmodule
+`endif
 """
 KISS_table_entry = """        8'd{num} : piresult = 8'd{val};
 """
