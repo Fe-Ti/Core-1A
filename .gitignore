@@ -1,2 +1,4 @@
 **/obj_dir/**
 **/__pycache__/**
+*.out
+*.bin
