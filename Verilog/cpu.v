@@ -26,6 +26,7 @@ module cpu(
     output wire [`XLEN:1] data_mem_stored_data,
     output wire [`MEMSIZE_BUS_WIDTH:1] data_mem_cmd_datasize,
     output wire data_mem_cmd_read, data_mem_cmd_write,
+    mem_sync_cache_instruction, mem_sync_cache_data,
     input wire [`XLEN:1] data_mem_loaded_data,
     input wire data_mem_ready
 );
@@ -150,6 +151,8 @@ module cpu(
     assign data_mem_cmd_datasize = control_bus_wb[`select_mem_size_start+`select_mem_size_bitcnt-1:`select_mem_size_start];
     assign data_mem_cmd_read = control_bus_wb[`mem_r];
     assign data_mem_cmd_write = control_bus_wb[`mem_w];
+    assign mem_sync_cache_instruction = control_bus_wb[`mem_sync_cache_instruction]; 
+    assign mem_sync_cache_data = control_bus_wb[`mem_sync_cache_data];
 
     assign rd_wb = control_bus_wb[`mem_r] ? data_mem_loaded_data : alu_result_wb;
 
