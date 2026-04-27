@@ -15,7 +15,7 @@ module brancher (
     output wire do_branch
 );
     reg do_branch_reg;
-    assign do_branch = do_branch_reg;
+    assign do_branch = do_test_branch ? do_branch_reg : 0;
 
     // Flag selector
     // func3 bits:

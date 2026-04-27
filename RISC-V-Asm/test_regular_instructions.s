@@ -1,6 +1,6 @@
 entry:
-    addi    x1, x0, 101 # x1 = x0 + 101
-    addi    x2, x1, -33 # x2 = x1  -33 == 101-33 = 68 
+    addi    x1, x0, 0x100 # x1 = x0 + 0x100
+    addi    x2, x1, 0x0 # x2 = x1  -33
     sub     x3, x1, x2 # x3 = x1 - x2 == 33
     sb      x1, 0(x2) # Storing x1 at x2+0 as byte (8 bits)
     sd      x1, 0(x2) # Storing x1 at x2+0 as double word (64 bits)
@@ -26,11 +26,13 @@ entry:
     bne     x9, x5, target_neq   
 target_eq:
     fence
+    jal     x0, go_back
 target_neq:
     fence.i
+go_back:
+    jal     x0, entry
 some_point:
     jalr    x31, x31, 0 # return back where we jumped 
-    jal     x0, entry
     
     
 

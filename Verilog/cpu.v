@@ -37,7 +37,7 @@ module cpu(
     ///
 
     /// Data and control buses
-    wire [`XLEN:1] rs1_fd, rs2_fd, imm_fd, arg1_fd, arg2_fd, alu_result_ex, rd_wb, fwd_wb_rd;
+    wire [`XLEN:1] rs1_fd, rs2_fd, imm_fd, arg1_fd, arg2_fd, alu_result_ex, rd_wb;
     reg [`XLEN:1] rs2_ex, rs2_wb, arg1_ex, arg2_ex, alu_result_wb;
 
     wire [`REG_SELECT_WIDTH:1] rs1_addr_fd, rs2_addr_fd, rd_addr_fd;
@@ -122,7 +122,7 @@ module cpu(
         .write_enable (control_bus_wb[`regfile_we]),
         .clk (clk),
         // 
-        .fwd_wb_rd (fwd_wb_rd),
+        .fwd_wb_rd (rd_wb),
         // .fwd_ex_rd (fwd_ex_rd),
         .stage_fd_override_rs1_with_rdwb (stage_fd_override_rs1_with_rdwb),
         .stage_fd_override_rs2_with_rdwb (stage_fd_override_rs2_with_rdwb),
@@ -175,10 +175,21 @@ module cpu(
     wire [`XLEN:1] nopped_alu_result_ex = stage_enable_ex? alu_result_ex : nop_XLEN;
     wire [`XLEN:1] nopped_rs2_ex = stage_enable_ex? rs2_ex : nop_XLEN;
 
+    always @(clk) begin
+        $display("PC %h, next_PC_fd %h, do_test_branch %h, do_jump %h, do_branch %h", PC, next_PC_fd, control_bus_fd[`do_test_branch] , control_bus_fd[`do_jump] , do_branch_fd);
+        $display("    rs1_fd %h, imm_fd %h,  rs1_ovr %b, rs1_addr_fd %h", rs1_fd, imm_fd, stage_fd_override_rs1_with_rdwb, rs1_addr_fd);
+        $display("enable: FD=%b EX=%b WB=%b", stage_enable_fd,stage_enable_ex,stage_enable_wb);
+        $display("nopped_rd_addr_fd %h, nopped_rd_addr_ex %h, rd_addr_wb %h", nopped_rd_addr_fd, nopped_rd_addr_ex, rd_addr_wb);
+    end
+
     /// Reg-Reg Transfer logic
     always @(posedge clk) begin
         if (global_reset) begin
             PC <= 0;
+            rd_addr_ex <= 0;
+            rd_addr_wb <= 0;
+            control_bus_ex <= 0;
+            control_bus_wb <= 0;
         end
         else begin
             if (stage_enable_fd) begin
