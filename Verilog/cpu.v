@@ -66,7 +66,7 @@ module cpu(
         .rd_addr_ex(rd_addr_ex),    .rd_addr_wb(rd_addr_wb),
         // Input wires
         .is_no_writeback_ex(~control_bus_ex[`regfile_we]),
-        .is_no_writeback_wb(~control_bus_ex[`regfile_we]),
+        .is_no_writeback_wb(~control_bus_wb[`regfile_we]),
         .is_jump_ex(control_bus_ex[`do_jump]),
         .is_jump_wb(control_bus_wb[`do_jump]),
         .is_prog_mem_ready(program_mem_ready),
@@ -182,6 +182,8 @@ module cpu(
         $display("nopped_rd_addr_fd %h, nopped_rd_addr_ex %h, rd_addr_wb %h", nopped_rd_addr_fd, nopped_rd_addr_ex, rd_addr_wb);
     end
 
+    reg [`XLEN:1] PC_ex, PC_wb;
+
     /// Reg-Reg Transfer logic
     always @(posedge clk) begin
         if (global_reset) begin
@@ -202,12 +204,14 @@ module cpu(
                 rd_addr_ex <= nopped_rd_addr_fd;
                 // May be ommitted I suppose, but for uniformity here it is
                 rs2_ex <= nopped_rs2_fd;
+                PC_ex <= PC;
             end
             if (stage_enable_wb) begin
                 control_bus_wb <= nopped_control_bus_ex;
                 alu_result_wb <= nopped_alu_result_ex;
                 rd_addr_wb <= nopped_rd_addr_ex;
                 rs2_wb <= nopped_rs2_ex;
+                PC_wb <= PC_ex;
             end
         end
     end

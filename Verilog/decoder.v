@@ -119,7 +119,7 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     assign control_bus[`is_JALR] = JALR;
 
     assign control_bus[`select_arg1] = JAL | AUIPC | BRANCH;
-    assign control_bus[`select_arg2] = ~is_type_R;
+    assign control_bus[`select_arg2] = ~(is_type_R | custom0); /// for custom ext use RS2 as for R-type
     //~ assign control_bus[`] = ;
 
     // Flag selector
@@ -149,7 +149,7 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     // thus func7[0] can be used as indicator for rv64
     //
     // My additional commands are as follows (tables from Report):
-    // opcode = custom1
+    // opcode = custom0
     //  Мнемоника    Команда                                           RV32  RV64
     //  >>> Zkkuznk
     //  kuznk32ellh  Старшая часть суммы \(\ell(a)\)                   +            func3=0x0
@@ -168,7 +168,7 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     //  magma64edrh  Преобразование \(G[k](a_1, a_0)\) (старший ключ)        +      func3=0x7
     // two are of type I with ignored constant and the latter are R-type ones
     assign control_bus[`select_aluop_start+`select_aluop_bitcnt-1:`select_aluop_start] =
-        {custom1, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
+        {custom0, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
 
     // We don't want to write anything into RD when branching or writing to mem
     assign control_bus[`regfile_we] = ~|{BRANCH, STORE, STORE_FP};

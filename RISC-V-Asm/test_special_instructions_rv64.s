@@ -1,8 +1,10 @@
 entry:
     addi    x1, x0, 0x100 # x1 = x0 + 0x100
-    addi    x2, x0, 0x0 # x2 = x1  -33
-    kuznk64rfwd x3, x1, x2 # R half result
-    kuznkdblsrl x1, x1, x2 # R shift in second half result
+    addi    x2, x0, 0x0
+    # kuznk64rfwd x3, x1, x2 # R half result
+    # kuznkdblsrl x1, x1, x2 # R shift in second half result
+    kuznk64rfwd x3, x2, x1 # R half result
+    kuznkdblsrl x1, x2, x1 # R shift in second half result
     li x4, 0x9400000000000000
     li x5, 0x0000000000000001
     xor x8, x3, x4

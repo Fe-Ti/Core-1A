@@ -34,7 +34,7 @@ module alu(
     // thus func7[0] can be used as indicator for rv64
     //
     // My additional commands are as follows (tables from Report):
-    // opcode = custom1
+    // opcode = custom0
     //  Мнемоника    Команда                                           RV32  RV64
     //  >>> Zkkuznk
     //  kuznk32ellh  Старшая часть суммы \(\ell(a)\)                   +            func3=0x0
@@ -53,22 +53,22 @@ module alu(
     //  magma64edrh  Преобразование \(G[k](a_1, a_0)\) (старший ключ)        +      func3=0x7 (func7[5])
     // two are of type I with ignored constant and the latter are R-type ones
     /// assign control_bus[`select_aluop_start+`select_aluop_bitcnt-1:`select_aluop_start] =
-    /// {custom1, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
+    /// {custom0, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
 
     /// Shitty multiplexing is going on :-D
     wire [`select_aluop_bitcnt:1] select_alu_op = 
         control_bus[`select_aluop_start+`select_aluop_bitcnt-1:`select_aluop_start];
 
-    wire is_custom1 = select_alu_op[`select_aluop_bitcnt];
-    wire is_type_R  = select_alu_op[7];
-    wire is_32_bit  = select_alu_op[6];
+    wire is_custom0 = select_alu_op[`select_aluop_bitcnt];
+    wire is_type_R  = select_alu_op[9];
+    wire is_32_bit  = select_alu_op[8];
 
     wire [2:0] func3 = select_alu_op[3:1];
 
-    wire func7_5 = select_alu_op[5];
-    wire func7_4 = select_alu_op[4];
-    wire func7_2 = select_alu_op[3];
-    wire func7_0 = select_alu_op[2];
+    wire func7_5 = select_alu_op[7];
+    wire func7_4 = select_alu_op[6];
+    wire func7_2 = select_alu_op[5];
+    wire func7_0 = select_alu_op[4];
 
     reg [`XLEN:1] op_result;
     assign result = op_result;
@@ -233,14 +233,14 @@ module alu(
     wire [`XLEN:1] and_packh = func7_2 ? packh : and_andn;
 
     /// Multiplexing signals
-    wire [`XLEN:1] add_sub_ell_rfwd         = is_custom1 ? ell_rfwd : add_sub;
-    wire [`XLEN:1] sll_rol_bss_rinv         = is_custom1 ? bss_rinv : sll_rol;
-    wire [`XLEN:1] slt_sboxfwd              = is_custom1 ? sbox_fwd_result : slt;
-    wire [`XLEN:1] sltu_sboxinv             = is_custom1 ? sbox_inv_result : sltu;
-    wire [`XLEN:1] xor_xnor_pack_dblsrl     = is_custom1 ? dblsrl : xor_xnor_pack;
-    wire [`XLEN:1] sr_ror_rev_dblsll        = is_custom1 ? dblsll : sr_ror_rev;
+    wire [`XLEN:1] add_sub_ell_rfwd         = is_custom0 ? ell_rfwd : add_sub;
+    wire [`XLEN:1] sll_rol_bss_rinv         = is_custom0 ? bss_rinv : sll_rol;
+    wire [`XLEN:1] slt_sboxfwd              = is_custom0 ? sbox_fwd_result : slt;
+    wire [`XLEN:1] sltu_sboxinv             = is_custom0 ? sbox_inv_result : sltu;
+    wire [`XLEN:1] xor_xnor_pack_dblsrl     = is_custom0 ? dblsrl : xor_xnor_pack;
+    wire [`XLEN:1] sr_ror_rev_dblsll        = is_custom0 ? dblsll : sr_ror_rev;
     // wire [`XLEN:1] or_orn                   = func7_5 ? (arg1 | ~arg2) : (arg1 | arg2);
-    wire [`XLEN:1] and_packh_edf_edrl_edrh  = is_custom1 ? edf_edrl_edrh : and_packh;
+    wire [`XLEN:1] and_packh_edf_edrl_edrh  = is_custom0 ? edf_edrl_edrh : and_packh;
 
     always @* begin
         op_result = 0;

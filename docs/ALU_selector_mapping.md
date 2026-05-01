@@ -18,7 +18,7 @@ Plus brev8 and rev8 have special imm as follows (func7 = 011010x):
 thus func7[0] can be used as indicator for rv64
 
 My additional commands are as follows (tables from Report):
-opcode = custom1
+opcode = custom0
  Мнемоника    Команда                                           RV32  RV64
  >>> Zkkuznk
  kuznk32ellh  Старшая часть суммы \(\ell(a)\)                   +            func3=0x0
@@ -37,4 +37,4 @@ opcode = custom1
  magma64edrh  Преобразование \(G[k](a_1, a_0)\) (старший ключ)        +      func3=0x7 (func7[5])
 two are of type I with ignored constant and the latter are R-type ones
  assign control_bus[`select_aluop_start+`select_aluop_bitcnt-1:`select_aluop_start] =
- {custom1, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
+ {custom0, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};

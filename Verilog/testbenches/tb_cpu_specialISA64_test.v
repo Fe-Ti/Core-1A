@@ -11,8 +11,8 @@
 `timescale 1ns/1ns
 
 
-`define PROGSIZE 100
-`define tics_count 50
+`define PROGSIZE 200
+`define tics_count 150
 
 module tb_cpu;
 reg clk;
@@ -68,15 +68,15 @@ initial begin
     rst = 0;
     #10;
     for (i = 0; i < `tics_count; i = i + 1) begin
-        curr_instruction = program_data[progmem_addr[2+$clog2(`PROGSIZE):3]];
+        curr_instruction = program_data[progmem_addr[2+$clog2(`PROGSIZE):3]];#15;
         $display("tick %d: %d : %h", i, progmem_addr[2+$clog2(`PROGSIZE):3], curr_instruction);
-        clk = 1; $display("UP _/*"); #10; 
+        clk = 1; $display("UP _/*"); #20; 
         // #10;
-        clk = 0; $display("DN *\\_"); #10;
+        clk = 0; $display("DN *\\_"); #5;
         $display("tick %d: %d ", i, progmem_addr[2+$clog2(`PROGSIZE):3]);
     end
     $finish(2);
 end
 
 endmodule
-`default_nettype wire
+// `default_nettype wire
