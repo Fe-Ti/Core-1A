@@ -4,7 +4,7 @@ assembly2verilog.sh IFILE [OFILE] \n
 When OFILE is ommited resulted files are placed where the script\n
 is executed.\n
 """
-source env
+source ./env
 
 # export TOOLCHAIN_PREFIX="riscv64-linux-gnu-"
 export TOOLCHAIN_PREFIX="riscv64-unknown-elf-"

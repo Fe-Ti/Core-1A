@@ -2,20 +2,20 @@
 ## riscv-opc.c:
 ```c
 /* GOST custom instructions.  */
-{"kuznk32bssl", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNK32BSSL, MASK_KUZNK32BSSL, match_opcode, 0},
-{"kuznk32bssr", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNK32BSSR, MASK_KUZNK32BSSR, match_opcode, 0},
-{"kuznk32ellh", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNK32ELLH, MASK_KUZNK32ELLH, match_opcode, 0},
-{"kuznk32elll", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNK32ELLL, MASK_KUZNK32ELLL, match_opcode, 0},
-{"kuznk64rfwd", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNK64RFWD, MASK_KUZNK64RFWD, match_opcode, 0},
-{"kuznk64rinv", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNK64RINV, MASK_KUZNK64RINV, match_opcode, 0},
-{"kuznkdblsll", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNKDBLSLL, MASK_KUZNKDBLSLL, match_opcode, 0},
-{"kuznkdblsrl", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_KUZNKDBLSRL, MASK_KUZNKDBLSRL, match_opcode, 0},
+{"kuznk32bssl", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNK32BSSL, MASK_KUZNK32BSSL, match_opcode, 0},
+{"kuznk32bssr", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNK32BSSR, MASK_KUZNK32BSSR, match_opcode, 0},
+{"kuznk32ellh", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNK32ELLH, MASK_KUZNK32ELLH, match_opcode, 0},
+{"kuznk32elll", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNK32ELLL, MASK_KUZNK32ELLL, match_opcode, 0},
+{"kuznk64rfwd", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNK64RFWD, MASK_KUZNK64RFWD, match_opcode, 0},
+{"kuznk64rinv", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNK64RINV, MASK_KUZNK64RINV, match_opcode, 0},
+{"kuznkdblsll", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNKDBLSLL, MASK_KUZNKDBLSLL, match_opcode, 0},
+{"kuznkdblsrl", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_KUZNKDBLSRL, MASK_KUZNKDBLSRL, match_opcode, 0},
 {"kuznksboxfwd", 0, INSN_CLASS_XKKMGOST, "d,s", MATCH_KUZNKSBOXFWD, MASK_KUZNKSBOXFWD, match_opcode, 0},
 {"kuznksboxinv", 0, INSN_CLASS_XKKMGOST, "d,s", MATCH_KUZNKSBOXINV, MASK_KUZNKSBOXINV, match_opcode, 0},
 
-{"magma32edf",  0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_MAGMA32EDF, MASK_MAGMA32EDF, match_opcode, 0},
-{"magma64edrh", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_MAGMA64EDRH, MASK_MAGMA64EDRH, match_opcode, 0},
-{"magma64edrl", 0, INSN_CLASS_XKKMGOST, "d,t,s", MATCH_MAGMA64EDRL, MASK_MAGMA64EDRL, match_opcode, 0},
+{"magma32edf",  0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_MAGMA32EDF, MASK_MAGMA32EDF, match_opcode, 0},
+{"magma64edrh", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_MAGMA64EDRH, MASK_MAGMA64EDRH, match_opcode, 0},
+{"magma64edrl", 0, INSN_CLASS_XKKMGOST, "d,s,t", MATCH_MAGMA64EDRL, MASK_MAGMA64EDRL, match_opcode, 0},
 ```
 
 ## riscv.h:
