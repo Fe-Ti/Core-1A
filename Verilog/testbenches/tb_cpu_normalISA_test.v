@@ -54,7 +54,7 @@ cpu RV64_CPU
 );
 
 initial begin
-    $dumpfile("tb_cpu.vcd");
+    $dumpfile("tb_res_normal_instructions_test_64.vcd");
     $dumpvars();
 end
 integer i;
