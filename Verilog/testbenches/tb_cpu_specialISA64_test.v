@@ -12,7 +12,7 @@
 
 
 `define PROGSIZE 200
-`define tics_count 150
+`define tics_count 500
 
 module tb_cpu;
 reg clk;

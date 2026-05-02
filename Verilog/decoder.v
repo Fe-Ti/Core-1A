@@ -42,6 +42,11 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     assign is_type_B = BRANCH;
     assign is_type_S = STORE | STORE_FP;
     assign is_type_U = LUI | AUIPC;
+
+    // By 'not ALU op' I mean that even if it's ALU addition, the main goal of instruction
+    // is to do something else. So we need to get control_bus=Zero
+    wire is_not_ALU_op = ~|{is_type_J, is_type_U, is_type_S, LOAD, LOAD_FP, is_type_B};
+
     // Getting constant
     assign immsign = instruction[32];
     assign imm20U = {instruction[32:13], 12'b0};
@@ -168,7 +173,7 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     //  magma64edrh  Преобразование \(G[k](a_1, a_0)\) (старший ключ)        +      func3=0x7
     // two are of type I with ignored constant and the latter are R-type ones
     assign control_bus[`select_aluop_start+`select_aluop_bitcnt-1:`select_aluop_start] =
-        {custom0, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3};
+        {custom0, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3} & {`select_aluop_bitcnt{is_not_ALU_op}};
 
     // We don't want to write anything into RD when branching or writing to mem
     assign control_bus[`regfile_we] = ~|{BRANCH, STORE, STORE_FP};
