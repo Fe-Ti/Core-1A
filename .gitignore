@@ -4,3 +4,5 @@
 *.bin
 **/todo:**
 *.vcd
+**/C-with-RVASM/*.s
+

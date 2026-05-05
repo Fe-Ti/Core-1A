@@ -51,6 +51,4 @@ magma_testing:
     xor x8, x2, x3
 go_back:
     jal     x0, entry
-    
-    
 
