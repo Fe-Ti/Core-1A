@@ -11,7 +11,7 @@ export TOOLCHAIN_PREFIX="riscv64-unknown-elf-"
 export ASSEMBLER_EXEC="as"
 export OBJCOPY_EXEC="objcopy"
 
-export MARCH='-march=rv64i_xkkmgost'
+export MARCH='-march=rv64i_zbkb_xkkmgost'
 #export ENDIANNESS="-mbig-endian"
 export ENDIANNESS="-mlittle-endian"
 

@@ -174,8 +174,8 @@ module alu(
     wire [`XLEN:1] sll64 = arg1 << arg2[6:1];
     wire [`XLEN:1] sll = is_32_bit ? {{32{sll32[32]}}, sll32} : sll64;
 
-    wire [32:1] rol32 = sll32 | (arg1[32:1] >> (32 - arg2));
-    wire [`XLEN:1] rol64 = sll64 | (arg1 >> (`XLEN - arg2));
+    wire [32:1] rol32 = sll32 | (arg1[32:1] >> (32 - arg2[5:1]));
+    wire [`XLEN:1] rol64 = sll64 | (arg1 >> (`XLEN - arg2[6:1]));
     wire [`XLEN:1] rol = is_32_bit ? {{32{rol32[32]}}, rol32} : rol64;
     wire [`XLEN:1] sll_rol = (func7_5 & func7_4) ? rol : sll;
 
@@ -217,8 +217,8 @@ module alu(
 
     wire [`XLEN:1] sr = func7_5 ? sra : srl;
 
-    wire [32:1] ror32 = srl32 | (arg1[32:1] << (32 - arg2));
-    wire [`XLEN:1] ror64 = srl64 | (arg1 << (`XLEN - arg2));
+    wire [32:1] ror32 = srl32 | (arg1[32:1] << (32 -  arg2[5:1]));
+    wire [`XLEN:1] ror64 = srl64 | (arg1 << (`XLEN -  arg2[6:1]));
     wire [`XLEN:1] ror = is_32_bit ? {{32{ror32[32]}}, ror32} : ror64;
 
     wire [`XLEN:1] sr_ror = func7_4? ror : sr;
