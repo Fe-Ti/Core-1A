@@ -58,6 +58,57 @@ main:
     mv  x2, x15 # save registers
     mv  x3, x16
 
+    call Key_schedule_1
+    mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
+    mv  x16, x3
+    mv  x17, x4 # moving K3 into LSX regs
+    mv  x18, x5
+    call LSX_K_a # calling LSX[K1](a)
+    mv  x17, x6 # moving K4 into LSX regs
+    mv  x18, x7
+    call LSX_K_a
+    mv  x2, x15 # save registers
+    mv  x3, x16
+
+
+    call Key_schedule_2
+    mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
+    mv  x16, x3
+    mv  x17, x4 # moving K5 into LSX regs
+    mv  x18, x5
+    call LSX_K_a # calling LSX[K1](a)
+    mv  x17, x6 # moving K6 into LSX regs
+    mv  x18, x7
+    call LSX_K_a
+    mv  x2, x15 # save registers
+    mv  x3, x16
+
+    call Key_schedule_3
+    mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
+    mv  x16, x3
+    mv  x17, x4 # moving K7 into LSX regs
+    mv  x18, x5
+    call LSX_K_a # calling LSX[K1](a)
+    mv  x17, x6 # moving K8 into LSX regs
+    mv  x18, x7
+    call LSX_K_a
+    mv  x2, x15 # save registers
+    mv  x3, x16
+
+    call Key_schedule_4
+    mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
+    mv  x16, x3
+    mv  x17, x4 # moving K9 into LSX regs
+    mv  x18, x5
+    call LSX_K_a # calling LSX[K1](a)
+    xor x2, x2, x6
+    xor x3, x3, x7
+
+check_up_result:
+    li x12, 0x7f679d90bebc2430
+    li x13, 0x5a468d42b9d4edcd
+    xor x14, x2, x12
+    xor x15, x3, x13
 
 halt:
     j halt  # jump to halt
