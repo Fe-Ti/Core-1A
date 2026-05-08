@@ -9,10 +9,9 @@
 #   - x1 is used as ra (Return Address reg)
 #   - block is in x2,x3 (upper, lower)
 #   - Keys are placed in x4...x7
-#   - main iteration var is in x8
 #   - C_i is in x10, x11
-#   - Checkup sample is in x12, x13
-#   - XORred checkup with result is in x14
+#   - Checkup sample is in x24, x25
+#   - XORred checkup with result is in x26, x27
 #
 # Other regs may contain some temp data (look for comments with ###)
 
@@ -29,7 +28,6 @@
 #       LSX[K9](a)
 #       X[K10](a)
 #       goto halt
-.include "lib_kuznechik_key_schedule.s"
 
 load_up_main_key:
     # Using sample key: MSB in x4, LSB in x7 :)
@@ -51,68 +49,69 @@ main:
     mv  x16, x3
     mv  x17, x4 # moving K1 into LSX regs
     mv  x18, x5
-    call LSX_K_a # calling LSX[K1](a)
+    jal ra, LSX_K_a # calling LSX[K1](a)
     mv  x17, x6 # moving K2 into LSX regs
     mv  x18, x7
-    call LSX_K_a
+    jal ra, LSX_K_a
     mv  x2, x15 # save registers
     mv  x3, x16
 
-    call Key_schedule_1
+    jal ra, Key_schedule_1
     mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
     mv  x16, x3
     mv  x17, x4 # moving K3 into LSX regs
     mv  x18, x5
-    call LSX_K_a # calling LSX[K1](a)
+    jal ra, LSX_K_a # calling LSX[K1](a)
     mv  x17, x6 # moving K4 into LSX regs
     mv  x18, x7
-    call LSX_K_a
+    jal ra, LSX_K_a
     mv  x2, x15 # save registers
     mv  x3, x16
 
 
-    call Key_schedule_2
+    jal ra, Key_schedule_2
     mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
     mv  x16, x3
     mv  x17, x4 # moving K5 into LSX regs
     mv  x18, x5
-    call LSX_K_a # calling LSX[K1](a)
+    jal ra, LSX_K_a # calling LSX[K1](a)
     mv  x17, x6 # moving K6 into LSX regs
     mv  x18, x7
-    call LSX_K_a
+    jal ra, LSX_K_a
     mv  x2, x15 # save registers
     mv  x3, x16
 
-    call Key_schedule_3
+    jal ra, Key_schedule_3
     mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
     mv  x16, x3
     mv  x17, x4 # moving K7 into LSX regs
     mv  x18, x5
-    call LSX_K_a # calling LSX[K1](a)
+    jal ra, LSX_K_a # calling LSX[K1](a)
     mv  x17, x6 # moving K8 into LSX regs
     mv  x18, x7
-    call LSX_K_a
+    jal ra, LSX_K_a
     mv  x2, x15 # save registers
     mv  x3, x16
 
-    call Key_schedule_4
+    jal ra, Key_schedule_4
     mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
     mv  x16, x3
     mv  x17, x4 # moving K9 into LSX regs
     mv  x18, x5
-    call LSX_K_a # calling LSX[K1](a)
+    jal ra, LSX_K_a # calling LSX[K1](a)
+    mv  x2, x15 # save registers
+    mv  x3, x16
     xor x2, x2, x6
     xor x3, x3, x7
 
 check_up_result:
-    li x12, 0x7f679d90bebc2430
-    li x13, 0x5a468d42b9d4edcd
-    xor x14, x2, x12
-    xor x15, x3, x13
+    li x24, 0x7f679d90bebc2430
+    li x25, 0x5a468d42b9d4edcd
+    xor x26, x2, x24
+    xor x27, x3, x25
 
 halt:
     j halt  # jump to halt
-    
 
 ### LSX k a procedure
 # Registers:
@@ -170,4 +169,6 @@ LSX_K_a:
     kuznkdblsrl x16, x16, x19
     # Hooray!!!!!! We've done it!!!!
     ret
+
+.include "lib_kuznechik_key_schedule.s"
 

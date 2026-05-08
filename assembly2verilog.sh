@@ -14,6 +14,7 @@ export OBJCOPY_EXEC="objcopy"
 export MARCH='-march=rv64i_zbkb_xkkmgost'
 #export ENDIANNESS="-mbig-endian"
 export ENDIANNESS="-mlittle-endian"
+export INCLUDES="-ITest-programs/RISC-V-Asm/"
 
 export instruction_width=4 # 4 Bytes
 
@@ -38,7 +39,7 @@ fi
 errors=0
 
 echo "Assembling..."
-$TOOLCHAIN_PREFIX$ASSEMBLER_EXEC $MARCH $ENDIANNESS -o $obj_filename $ifilename
+$TOOLCHAIN_PREFIX$ASSEMBLER_EXEC $MARCH $ENDIANNESS $INCLUDES -o $obj_filename $ifilename
 errors=$(( $errors + $? ))
 echo "Converting into verilog mem format ($instruction_width bytes width)..."
 $TOOLCHAIN_PREFIX$OBJCOPY_EXEC --verilog-data-width $instruction_width -O verilog $obj_filename $ofilename

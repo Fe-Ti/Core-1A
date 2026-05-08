@@ -61,7 +61,7 @@ for i in range(4):
         print(f"    li {C_lower}, 0x{bin_array_to_hex_string(C_i[64:])} # Load low  part of C_{i*8+k+1} into {C_lower}")
         print(f"    mv {LSX_a_h}, {Key_1_h}")
         print(f"    mv {LSX_a_l}, {Key_1_l}")
-        print(f"    call LSX_K_a")
+        print(f"    jal ra, LSX_K_a")
         print(f"    xor {Key_2_h}, {Key_2_h}, {LSX_a_h}")
         print(f"    xor {Key_2_l}, {Key_2_l}, {LSX_a_l}")
 
@@ -76,7 +76,7 @@ for i in range(4):
         print(f"    li {C_lower}, 0x{bin_array_to_hex_string(C_i[64:])} # Load low  part of C_{i*8+k+2} into {C_lower}")
         print(f"    mv {LSX_a_h}, {Key_2_h}")
         print(f"    mv {LSX_a_l}, {Key_2_l}")
-        print(f"    call LSX_K_a")
+        print(f"    jal ra, LSX_K_a")
         print(f"    xor {Key_1_h}, {Key_1_h}, {LSX_a_h}")
         print(f"    xor {Key_1_l}, {Key_1_l}, {LSX_a_l}")
 
