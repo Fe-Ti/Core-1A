@@ -1,3 +1,10 @@
+# Copyright 2026 Fe-Ti aka Tim Kravchenko
+#
+# Magma programming
+# 
+# Magma base encryption
+# Version:  1
+#
 load_keys:
     # Using sample key
     # ffeeddccbbaa9988

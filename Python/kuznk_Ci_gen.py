@@ -2,18 +2,35 @@
 #
 # Kuznyechik programming
 # 
-# Generator of C_i as li instructions templates
+# Key scheduling template generator
 # Version:  1
 #
 
 import kuznk_L_transform as ltlib
 import numpy as np
 
+# Registers to be used in templates
+C_upper = 'x17'
+C_lower = 'x18'
+Key_1_h = 'x4'
+Key_1_l = 'x5'
+Key_2_h = 'x6'
+Key_2_l = 'x7'
+
+LSX_K_h = C_upper
+LSX_K_l = C_lower
+LSX_a_h = 'x15'
+LSX_a_l = 'x16'
+
+RA_save_reg = 'x31'
+
+
 def bin_arr_to_num(arr):
     num = 0
     for i in range(len(arr)):
         num += arr[len(arr)-i-1] * 2**i
     return num
+
 
 
 def bin_array_to_hex_string(arr):
@@ -28,13 +45,42 @@ def bin_array_to_hex_string(arr):
 
 # print(bin_array_to_hex_string(np.array([1,0,0,0,1,0,0,1,1,1,0])))
 
-for i in range(32):
-    C_i = ltlib.calculate_L(
-        np.array(
-            [int(i) for i in bin(i+1)[2:].zfill(128)], dtype=np.int8
+for i in range(4):
+    print(f"Key_schedule_{i+1}:")
+    print(f"    mv {RA_save_reg}, x1")
+    for k in range(0, 8, 2):
+        # Two Feistel steps per iteration
+        C_i = ltlib.calculate_L(
+            np.array(
+                [int(j) for j in bin(i*8+k+1)[2:].zfill(128)], dtype=np.int8
+            )
         )
-    )
-    # print(i+1, ':', '0x'+bin_array_to_hex_string(C_i))
-    # print("    li XX,", "0x"+bin_array_to_hex_string(C_i), "# Load C_{i} into XX")
-    print("    li XX,", "0x"+bin_array_to_hex_string(C_i[:64]), "# Load high part of C_{i} into XX")
-    print("    li YY,", "0x"+bin_array_to_hex_string(C_i[64:]), "# Load low  part of C_{i} into YY")
+        # print(i+1, ':', '0x'+bin_array_to_hex_string(C_i))
+        # print("    li C_upper,", "0x"+bin_array_to_hex_string(C_i), "# Load C_{i} into C_upper")
+        print(f"    li {C_upper}, 0x{bin_array_to_hex_string(C_i[:64])} # Load high part of C_{i*8+k+1} into {C_upper}")
+        print(f"    li {C_lower}, 0x{bin_array_to_hex_string(C_i[64:])} # Load low  part of C_{i*8+k+1} into {C_lower}")
+        print(f"    mv {LSX_a_h}, {Key_1_h}")
+        print(f"    mv {LSX_a_l}, {Key_1_l}")
+        print(f"    call LSX_K_a")
+        print(f"    xor {Key_2_h}, {Key_2_h}, {LSX_a_h}")
+        print(f"    xor {Key_2_l}, {Key_2_l}, {LSX_a_l}")
+
+        C_i = ltlib.calculate_L(
+            np.array(
+                [int(j) for j in bin(i*8+k+2)[2:].zfill(128)], dtype=np.int8
+            )
+        )
+        # print(i+1, ':', '0x'+bin_array_to_hex_string(C_i))
+        # print("    li C_upper,", "0x"+bin_array_to_hex_string(C_i), "# Load C_{i} into C_upper")
+        print(f"    li {C_upper}, 0x{bin_array_to_hex_string(C_i[:64])} # Load high part of C_{i*8+k+2} into {C_upper}")
+        print(f"    li {C_lower}, 0x{bin_array_to_hex_string(C_i[64:])} # Load low  part of C_{i*8+k+2} into {C_lower}")
+        print(f"    mv {LSX_a_h}, {Key_2_h}")
+        print(f"    mv {LSX_a_l}, {Key_2_l}")
+        print(f"    call LSX_K_a")
+        print(f"    xor {Key_1_h}, {Key_1_h}, {LSX_a_h}")
+        print(f"    xor {Key_1_l}, {Key_1_l}, {LSX_a_l}")
+
+    print(f"    mv x1, {RA_save_reg}")
+    print(f"    ret\n")
+
+

@@ -1,6 +1,6 @@
 entry:
-    addi    x1, x0, 0x100 # x1 = x0 + 0x100
-    addi    x2, x0, 0x0
+    addi    x1, x0, 0x100 # x1 = x0 + 0x100 (low data block half)
+    addi    x2, x0, 0x0   #(upper block half)
     kuznk64rfwd x3, x1, x2 # R half result
     kuznkdblsrl x1, x1, x2 # R shift in second half result
     # kuznk64rfwd x3, x2, x1 # R half result
