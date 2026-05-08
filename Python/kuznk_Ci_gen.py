@@ -44,7 +44,8 @@ def bin_array_to_hex_string(arr):
     return(hex_str)
 
 # print(bin_array_to_hex_string(np.array([1,0,0,0,1,0,0,1,1,1,0])))
-
+do_load_cconst_from_mem = True
+cconsts_verilog_mem_string = ""
 for i in range(4):
     print(f"Key_schedule_{i+1}:")
     print(f"    mv {RA_save_reg}, x1")
@@ -55,8 +56,10 @@ for i in range(4):
                 [int(j) for j in bin(i*8+k+1)[2:].zfill(128)], dtype=np.int8
             )
         )
-        # print(i+1, ':', '0x'+bin_array_to_hex_string(C_i))
+        cconsts_verilog_mem_string = bin_array_to_hex_string(C_i[:64]) + " " + cconsts_verilog_mem_string
+        cconsts_verilog_mem_string = bin_array_to_hex_string(C_i[64:]) + "\n" + cconsts_verilog_mem_string
         # print("    li C_upper,", "0x"+bin_array_to_hex_string(C_i), "# Load C_{i} into C_upper")
+        # print(i+1, ':', '0x'+bin_array_to_hex_string(C_i))
         print(f"    li {C_upper}, 0x{bin_array_to_hex_string(C_i[:64])} # Load high part of C_{i*8+k+1} into {C_upper}")
         print(f"    li {C_lower}, 0x{bin_array_to_hex_string(C_i[64:])} # Load low  part of C_{i*8+k+1} into {C_lower}")
         print(f"    mv {LSX_a_h}, {Key_1_h}")
@@ -70,6 +73,8 @@ for i in range(4):
                 [int(j) for j in bin(i*8+k+2)[2:].zfill(128)], dtype=np.int8
             )
         )
+        cconsts_verilog_mem_string = bin_array_to_hex_string(C_i[:64]) + " " + cconsts_verilog_mem_string
+        cconsts_verilog_mem_string = bin_array_to_hex_string(C_i[64:]) + "\n" + cconsts_verilog_mem_string
         # print(i+1, ':', '0x'+bin_array_to_hex_string(C_i))
         # print("    li C_upper,", "0x"+bin_array_to_hex_string(C_i), "# Load C_{i} into C_upper")
         print(f"    li {C_upper}, 0x{bin_array_to_hex_string(C_i[:64])} # Load high part of C_{i*8+k+2} into {C_upper}")
@@ -84,3 +89,5 @@ for i in range(4):
     print(f"    ret\n")
 
 
+if do_load_cconst_from_mem:
+    print(cconsts_verilog_mem_string)
