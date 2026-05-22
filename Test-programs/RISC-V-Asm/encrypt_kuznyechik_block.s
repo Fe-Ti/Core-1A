@@ -29,6 +29,8 @@
 #       X[K10](a)
 #       goto halt
 
+.global _start
+_start:
 load_up_main_key:
     # Using sample key: MSB in x4, LSB in x7 :)
     # 8899aabbccddeeff

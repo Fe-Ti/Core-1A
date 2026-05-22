@@ -1,0 +1,142 @@
+XKGOST emu
+
+
+2.49. Printing statistics.
+
+=== cpu ===
+
+        +----------Local Count, excluding submodules.
+        | 
+    10157 wires
+    55353 wire bits
+    10157 public wires
+    55353 public wire bits
+       14 ports
+      299 port bits
+    11292 cells
+        3   $print
+      363   $scopeinfo
+        1   GND
+      100   IBUF
+      192   LUT1
+     1009   LUT2
+     2177   LUT3
+     5462   LUT4
+     1514   MUX2_LUT5
+      207   MUX2_LUT6
+      199   OBUF
+       64   RAM16SDP4
+        1   VCC
+      841 submodules
+      293   ALU
+      128   DFF
+      128   DFFE
+      292   DFFRE
+
+=== design hierarchy ===
+
+        +----------Count including submodules.
+        | 
+    11292 cpu
+
+        +----------Count including submodules.
+        | 
+    10157 wires
+    55353 wire bits
+    10157 public wires
+    55353 public wire bits
+       14 ports
+      299 port bits
+        - memories
+        - memory bits
+        - processes
+    11292 cells
+        3   $print
+      363   $scopeinfo
+        1   GND
+      100   IBUF
+      192   LUT1
+     1009   LUT2
+     2177   LUT3
+     5462   LUT4
+     1514   MUX2_LUT5
+      207   MUX2_LUT6
+      199   OBUF
+       64   RAM16SDP4
+        1   VCC
+      841 submodules
+      293   ALU
+      128   DFF
+      128   DFFE
+      292   DFFRE
+
+My XKKM
+
+2.49. Printing statistics.
+
+=== cpu ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     7620 wires
+    24107 wire bits
+     7620 public wires
+    24107 public wire bits
+       14 ports
+      299 port bits
+     9701 cells
+        3   $print
+       81   $scopeinfo
+        1   GND
+      100   IBUF
+      223   LUT1
+      613   LUT2
+     1963   LUT3
+     4775   LUT4
+     1496   MUX2_LUT5
+      182   MUX2_LUT6
+      199   OBUF
+       64   RAM16SDP4
+        1   VCC
+      848 submodules
+      300   ALU
+      128   DFF
+      128   DFFE
+      292   DFFRE
+
+=== design hierarchy ===
+
+        +----------Count including submodules.
+        | 
+     9701 cpu
+
+        +----------Count including submodules.
+        | 
+     7620 wires
+    24107 wire bits
+     7620 public wires
+    24107 public wire bits
+       14 ports
+      299 port bits
+        - memories
+        - memory bits
+        - processes
+     9701 cells
+        3   $print
+       81   $scopeinfo
+        1   GND
+      100   IBUF
+      223   LUT1
+      613   LUT2
+     1963   LUT3
+     4775   LUT4
+     1496   MUX2_LUT5
+      182   MUX2_LUT6
+      199   OBUF
+       64   RAM16SDP4
+        1   VCC
+      848 submodules
+      300   ALU
+      128   DFF
+      128   DFFE
+      292   DFFRE

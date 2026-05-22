@@ -32,7 +32,7 @@
 
 .global _start
 _start:
-load_up_main_key:
+# load_up_main_key:
     # Using sample key: MSB in x4, LSB in x7 :)
     # 8899aabbccddeeff
     # 0011223344556677
@@ -50,28 +50,27 @@ load_up_block:
 main:
     addi x8, zero, 64
 loop_me_please:
-    mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
-    mv  x16, x3
-    mv  x17, x4 # moving K1 into LSX regs
-    mv  x18, x5
-    jal ra, LSX_K_a # calling LSX[K1](a)
-    mv  x17, x6 # moving K2 into LSX regs
-    mv  x18, x7
-    jal ra, LSX_K_a
-    mv  x2, x15 # save registers
-    mv  x3, x16
+    # mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
+    # mv  x16, x3
+    # mv  x17, x4 # moving K1 into LSX regs
+    # mv  x18, x5
+    jal ra, LSX_K_odd_a # calling LSX[K1](a)
+    # mv  x17, x6 # moving K2 into LSX regs
+    # mv  x18, x7
+    jal ra, LSX_K_even_a
+    # mv  x2, x15 # save registers
+    # mv  x3, x16
 
     jal ra, Key_go_round
     bne x8, zero, loop_me_please # if x8 is not zero goto loop_me_please
-    
 
-    mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
-    mv  x16, x3
-    mv  x17, x4 # moving K9 into LSX regs
-    mv  x18, x5
-    jal ra, LSX_K_a # calling LSX[K1](a)
-    mv  x2, x15 # save registers
-    mv  x3, x16
+    # mv  x15, x2 # moving block into LSX reserved regs (x15, x16)
+    # mv  x16, x3
+    # mv  x17, x4 # moving K9 into LSX regs
+    # mv  x18, x5
+    jal ra, LSX_K_odd_a # calling LSX[K1](a)
+    # mv  x2, x15 # save registers
+    # mv  x3, x16
     xor x2, x2, x6
     xor x3, x3, x7
 
@@ -84,119 +83,130 @@ check_up_result:
 halt:
     j halt  # jump to halt
 
-### LSX k a procedure
+
+
+### LSX k_even a procedure (K2, ...)
 # Registers:
-#   - block (h, l): x15, x16
-#   - key k (h, l): x17, x18
-#   - Clobbered: x19
-#
-LSX_K_a:
+#   - block (h, l): x2, x3
+#   - key k (h, l): x6, x7
+#   - Clobbered: x19, x28
+LSX_K_even_a:
     # do X[k](a)
-    xor x15, x15, x17
-    xor x16, x16, x18
+    # xor x2, x2, x6
+    # xor x3, x3, x7
+    # jal x0, LSX_K_a_common_part  # jump to LSX_K_a_common_part
+
+### LSX k_odd a procedure (K1, ...)
+# Registers:
+#   - block (h, l): x2, x3
+#   - key k (h, l): x4, x5
+#   - Clobbered: x19, x28
+LSX_K_odd_a:
+    # do X[k](a)
+    # xor x2, x2, x4
+    # xor x3, x3, x5
+    # jump to common part === just go fwd :)
+
+LSX_K_a_common_part:
+    # do S(a)
+    kuznksboxfwd x2, x2
+    kuznksboxfwd x3, x3
+    # Oh, yeah, babe! 16 R transforms :)
+    li x28, 0x8
+LSX_K_a_double_r_trans:
+    kuznk64rfwd x19, x3, x2 # L half result
+    kuznk64rfwd x3, x2, x19
+    ret
+
+## Key scheduling procs
+
+### LSX for odd key procedure
+# Registers:
+#   - odd key (h, l): x4, x5
+#   - constant c_i (h, l): x17, x18
+#   - result in (h, l): x15, x16
+#   - Clobbered: x19, x28, x15, x16
+key_LSX_high_128bit:
+    # do X[k](a)
+    # xor x15, x4, x17
+    # xor x16, x5, x18
+    # jal x0, key_LSX_common_part  # jump to common part
+
+### LSX for odd key procedure
+# Registers:
+#   - even key (h, l):  x6, x7
+#   - constant c_i (h, l): x17, x18
+#   - result in (h, l): x15, x16
+#   - Clobbered: x19, x28, x15, x16
+key_LSX_low_128bit:
+    # do X[k](a)
+    # xor x15, x6, x17
+    # xor x16, x7, x18
+    # now go to common part
+key_LSX_common_part:
     # do S(a)
     kuznksboxfwd x15, x15
     kuznksboxfwd x16, x16
-    # Oh, yeah, babe! 16 R transforms :)
-    # Unwinded loop (why not XD)
-    kuznk64rfwd x19, x16, x15 # R half result
-    kuznkdblsrl x16, x16, x15 # R shift in second half result
-    kuznk64rfwd x15, x16, x19 # R half result
-    kuznkdblsrl x16, x16, x19 # R shift in second half result
-    # 14 left
-    kuznk64rfwd x19, x16, x15
-    kuznkdblsrl x16, x16, x15
-    kuznk64rfwd x15, x16, x19
-    kuznkdblsrl x16, x16, x19
-    # 12 left
-    kuznk64rfwd x19, x16, x15
-    kuznkdblsrl x16, x16, x15
-    kuznk64rfwd x15, x16, x19
-    kuznkdblsrl x16, x16, x19
-    # 10 left
-    kuznk64rfwd x19, x16, x15
-    kuznkdblsrl x16, x16, x15
-    kuznk64rfwd x15, x16, x19
-    kuznkdblsrl x16, x16, x19
-    # 8 left
-    kuznk64rfwd x19, x16, x15
-    kuznkdblsrl x16, x16, x15
-    kuznk64rfwd x15, x16, x19
-    kuznkdblsrl x16, x16, x19
-    # 6 left
-    kuznk64rfwd x19, x16, x15
-    kuznkdblsrl x16, x16, x15
-    kuznk64rfwd x15, x16, x19
-    kuznkdblsrl x16, x16, x19
-    # 4 left
-    kuznk64rfwd x19, x16, x15
-    kuznkdblsrl x16, x16, x15
-    kuznk64rfwd x15, x16, x19
-    kuznkdblsrl x16, x16, x19
-    # 2 left
-    kuznk64rfwd x19, x16, x15
-    kuznkdblsrl x16, x16, x15
-    kuznk64rfwd x15, x16, x19
-    kuznkdblsrl x16, x16, x19
-    # Hooray!!!!!! We've done it!!!!
+    kuznk64rfwd x19, x16, x15 # L half result
+    kuznk64rfwd x16, x15, x19
     ret
 
 Key_go_round:
     mv x31, x1
     ld x17, -1(x8) # Load high part of C_i1 into x17
     ld x18, -2(x8) # Load low  part of C_i1 into x18
-    mv x15, x4
-    mv x16, x5
-    jal ra, LSX_K_a
+    # mv x15, x4
+    # mv x16, x5
+    jal ra, key_LSX_high_128bit
     xor x6, x6, x15
     xor x7, x7, x16
     ld x17, -3(x8) # Load high part of C_i2 into x17
     ld x18, -4(x8) # Load low  part of C_i2 into x18
-    mv x15, x6
-    mv x16, x7
-    jal ra, LSX_K_a
+    # mv x15, x6
+    # mv x16, x7
+    jal ra, key_LSX_low_128bit
     xor x4, x4, x15
     xor x5, x5, x16
     ld x17, -5(x8) # Load high part of C_i3 into x17
     ld x18, -6(x8) # Load low  part of C_i3 into x18
-    mv x15, x4
-    mv x16, x5
-    jal ra, LSX_K_a
+    # mv x15, x4
+    # mv x16, x5
+    jal ra, key_LSX_high_128bit
     xor x6, x6, x15
     xor x7, x7, x16
     ld x17, -7(x8) # Load high part of C_i4 into x17
     ld x18, -8(x8) # Load low  part of C_i4 into x18
-    mv x15, x6
-    mv x16, x7
-    jal ra, LSX_K_a
+    # mv x15, x6
+    # mv x16, x7
+    jal ra, key_LSX_low_128bit
     xor x4, x4, x15
     xor x5, x5, x16
     ld x17, -9(x8) # Load high part of C_i5 into x17
     ld x18, -10(x8) # Load low  part of C_i5 into x18
-    mv x15, x4
-    mv x16, x5
-    jal ra, LSX_K_a
+    # mv x15, x4
+    # mv x16, x5
+    jal ra, key_LSX_high_128bit
     xor x6, x6, x15
     xor x7, x7, x16
     ld x17, -11(x8) # Load high part of C_i6 into x17
     ld x18, -12(x8) # Load low  part of C_i6 into x18
-    mv x15, x6
-    mv x16, x7
-    jal ra, LSX_K_a
+    # mv x15, x6
+    # mv x16, x7
+    jal ra, key_LSX_low_128bit
     xor x4, x4, x15
     xor x5, x5, x16
     ld x17, -13(x8) # Load high part of C_i7 into x17
     ld x18, -14(x8) # Load low  part of C_i7 into x18
-    mv x15, x4
-    mv x16, x5
-    jal ra, LSX_K_a
+    # mv x15, x4
+    # mv x16, x5
+    jal ra, key_LSX_high_128bit
     xor x6, x6, x15
     xor x7, x7, x16
     ld x17, -15(x8) # Load high part of C_i8 into x17
     ld x18, -16(x8) # Load low  part of C_i8 into x18
-    mv x15, x6
-    mv x16, x7
-    jal ra, LSX_K_a
+    # mv x15, x6
+    # mv x16, x7
+    jal ra, key_LSX_low_128bit
     xor x4, x4, x15
     xor x5, x5, x16
     addi x8, x8, -16 # x8 = x8 - 16

@@ -5,6 +5,9 @@
 # Magma base encryption
 # Version:  1
 #
+
+.global _start
+_start:
 load_keys:
     # Using sample key
     # ffeeddccbbaa9988

@@ -1,6 +1,7 @@
 **/obj_dir/**
 **/__pycache__/**
 *.out
+*.ldout
 *.bin
 **/todo:**
 *.vcd

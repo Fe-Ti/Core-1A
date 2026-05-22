@@ -9,6 +9,7 @@ source ./env
 # export TOOLCHAIN_PREFIX="riscv64-linux-gnu-"
 export TOOLCHAIN_PREFIX="riscv64-unknown-elf-"
 export ASSEMBLER_EXEC="as"
+export LD_EXEC="ld"
 export OBJCOPY_EXEC="objcopy"
 
 export MARCH='-march=rv64i_zbkb_xkkmgost'
@@ -21,6 +22,7 @@ export instruction_width=4 # 4 Bytes
 export ifilename=$1
 export ofilename=$2
 export obj_filename=${ofilename}_objfile.out
+export linked_obj_filename=${ofilename}.ldout
 
 if [ -z $ifilename ]; then
     echo -e $USAGE
@@ -30,6 +32,7 @@ fi
 if [ -z $ofilename ]; then
     export ofilename=$(echo $ifilename | awk -F '/' '{ print $NF }'| awk -F. '{ print $(NF - 1) }')
     export obj_filename=$ofilename.out
+    export linked_obj_filename=$ofilename.ldout
     export ofilename=$ofilename.hex
 fi
 
@@ -41,7 +44,12 @@ errors=0
 echo "Assembling..."
 $TOOLCHAIN_PREFIX$ASSEMBLER_EXEC $MARCH $ENDIANNESS $INCLUDES -o $obj_filename $ifilename
 errors=$(( $errors + $? ))
+echo "Linking with... err, whatever."
+$TOOLCHAIN_PREFIX$LD_EXEC  -o $linked_obj_filename $obj_filename
+errors=$(( $errors + $? ))
 echo "Converting into verilog mem format ($instruction_width bytes width)..."
+## RU White lists suck in 2026. Need docs for LD scripts, but there are none :(
+# $TOOLCHAIN_PREFIX$OBJCOPY_EXEC --verilog-data-width $instruction_width -O verilog $linked_obj_filename $ofilename
 $TOOLCHAIN_PREFIX$OBJCOPY_EXEC --verilog-data-width $instruction_width -O verilog $obj_filename $ofilename
 errors=$(( $errors + $? ))
 if [[ $errors == "0" ]]; then
