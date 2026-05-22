@@ -24,7 +24,7 @@ module brancher (
     // | | +--> inverse ? yes : no
     // | +----> unsigned? yes : no
     // +------> cmp_fun ? lt  : eq
-    always @(*) begin
+    always @* begin
         case (select_flag)
             0: do_branch_reg = (rs1==rs2);
             1: do_branch_reg = ~(rs1==rs2);

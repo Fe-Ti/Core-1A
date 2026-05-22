@@ -63,7 +63,7 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
 
     // Opcode decoding procedure
     // Sets corresponding flags from the map
-    always @(*) begin
+    always @* begin
         // Zero out mapping
         LOAD=0;    LOAD_FP=0; custom0=0;  MISC_MEM=0;OP_IMM=0;  AUIPC=0;OP_IMM_32=0;      wide48b=0;
         STORE=0;   STORE_FP=0;custom1=0;  AMO=0;     OP=0;      LUI=0;  OP_32=0;          wide64b=0;

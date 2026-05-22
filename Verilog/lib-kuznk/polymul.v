@@ -15,7 +15,7 @@ module polymul #(parameter  WIDTH = 8) (input wire [WIDTH-1:0] a_in, b_in,
 reg [WIDTH-1:0] a, b, result;
 reg msbit;
 
-always @(*) begin : polymul_comb_logic_generator
+always @* begin : polymul_comb_logic_generator
     integer i;
     result = 0;
     a = a_in;
