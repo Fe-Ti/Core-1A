@@ -14,7 +14,8 @@ module register_file(
     output wire [`XLEN:1] rs1, rs2
 );
     reg [`XLEN:1] x[31:0];
-    always @(negedge clk) begin
+    // always @(negedge clk) begin
+    always @(posedge clk) begin
         if (write_enable)
             x[rd_addr] <= input_data;
     end

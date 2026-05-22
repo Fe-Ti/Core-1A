@@ -175,12 +175,12 @@ module cpu(
     wire [`XLEN:1] nopped_alu_result_ex = stage_enable_ex? alu_result_ex : nop_XLEN;
     wire [`XLEN:1] nopped_rs2_ex = stage_enable_ex? rs2_ex : nop_XLEN;
 
-    always @(clk) begin
-        $display("PC %h, next_PC_fd %h, do_test_branch %h, do_jump %h, do_branch %h", PC, next_PC_fd, control_bus_fd[`do_test_branch] , control_bus_fd[`do_jump] , do_branch_fd);
-        $display("    rs1_fd %h, imm_fd %h,  rs1_ovr %b, rs1_addr_fd %h", rs1_fd, imm_fd, stage_fd_override_rs1_with_rdwb, rs1_addr_fd);
-        $display("enable: FD=%b EX=%b WB=%b", stage_enable_fd,stage_enable_ex,stage_enable_wb);
-        $display("nopped_rd_addr_fd %h, nopped_rd_addr_ex %h, rd_addr_wb %h", nopped_rd_addr_fd, nopped_rd_addr_ex, rd_addr_wb);
-    end
+    // always @(clk) begin
+    //     $display("PC %h, next_PC_fd %h, do_test_branch %h, do_jump %h, do_branch %h", PC, next_PC_fd, control_bus_fd[`do_test_branch] , control_bus_fd[`do_jump] , do_branch_fd);
+    //     $display("    rs1_fd %h, imm_fd %h,  rs1_ovr %b, rs1_addr_fd %h", rs1_fd, imm_fd, stage_fd_override_rs1_with_rdwb, rs1_addr_fd);
+    //     $display("enable: FD=%b EX=%b WB=%b", stage_enable_fd,stage_enable_ex,stage_enable_wb);
+    //     $display("nopped_rd_addr_fd %h, nopped_rd_addr_ex %h, rd_addr_wb %h", nopped_rd_addr_fd, nopped_rd_addr_ex, rd_addr_wb);
+    // end
 
     reg [`XLEN:1] PC_ex, PC_wb;
 

@@ -140,3 +140,96 @@ My XKKM
       128   DFF
       128   DFFE
       292   DFFRE
+
+
+
+
+
+
+
+
+
+
+# XKKM
+
+3. Executing STA pass (static timing analysis).
+Warning: Module 'ALU' has no timing arcs!
+Warning: Cell type '$scopeinfo' not recognised! Ignoring.
+Latest arrival time in 'alu' is 12616:
+   12616 (<unknown>)
+Warning: Critical-path does not terminate in a recognised endpoint.
+           \op_result [49]
+   12616 op_result_LUT4_F_12 (LUT4.I3->F)
+           \op_result_LUT4_F_12_I3 [3]
+   11714 op_result_LUT4_F_12_I3_LUT4_F_1 (LUT4.I3->F)
+           \op_result_LUT4_F_12_I3_LUT4_F_1_I3 [3]
+   10812 op_result_LUT4_F_12_I3_LUT4_F_1_I3_LUT4_F (LUT4.I3->F)
+           \op_result_LUT4_F_12_I3_LUT4_F_1_I3_LUT4_F_I3 [3]
+    9910 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F_MUX2_LUT5_S0_O_LUT3_I2_F_LUT3_I1_F_LUT4_I3 (LUT4.I3->F)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F_MUX2_LUT5_S0_O_LUT3_I2_F_LUT3_I1_F [3]
+    9008 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F_MUX2_LUT5_S0_O_LUT3_I2_F_LUT3_I1 (LUT3.I1->F)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F_MUX2_LUT5_S0_O_LUT3_I2_F [1]
+    7824 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F_MUX2_LUT5_S0_O_LUT3_I2 (LUT3.I2->F)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F_MUX2_LUT5_S0_O [2]
+    6922 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F_MUX2_LUT5_S0 (MUX2_LUT5.S0->O)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I1_LUT3_F_I1_LUT3_I2_F_LUT3_I1_I2_LUT3_I2_F [4]
+    6242 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I1_LUT3_I2_F_LUT3_I2_F_LUT2_F_I1_LUT3_I1 (LUT3.I2->F)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I1_LUT3_I2_F_LUT3_I2_F [4]
+    5340 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I1_LUT3_I2_F_LUT3_I2_F_LUT3_F (LUT3.I1->F)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I2_LUT3_I1_F [1]
+    4156 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I2_LUT3_I1 (LUT3.I1->F)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I2 [1]
+    2972 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I2_LUT3_F (LUT3.I0->F)
+           \func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I2_LUT3_F_I0 [1]
+    1486 func7_4_LUT2_I0_F_LUT2_F_I1_LUT3_I1_I2_LUT3_F_I2_LUT3_F_I2_LUT3_F_I0_LUT3_F (LUT3.I0->F)
+           \bss_rinv [8]
+       0 bss_rinv_IBUF_O_55 (IBUF.I->O)
+       0   \arg2 [0] (<primary input>)
+
+
+Arrival histogram:
+ legend: * represents 1 endpoint(s)
+         + represents [1,1) endpoint(s)
+( 12628,  12454] |** 
+( 12454,  12280] |***** 
+( 12280,  12106] |** 
+( 12106,  11932] |* 
+( 11932,  11758] | 
+( 11758,  11584] |********* 
+( 11584,  11410] |****** 
+( 11410,  11236] |* 
+( 11236,  11062] |**** 
+( 11062,  10888] |***** 
+( 10888,  10714] |**** 
+( 10714,  10540] |* 
+( 10540,  10366] |*** 
+( 10366,  10192] |* 
+( 10192,  10018] |******* 
+( 10018,   9844] |***** 
+(  9844,   9670] | 
+(  9670,   9496] |**** 
+(  9496,   9322] |*** 
+(  9322,   9148] |* 
+
+# XKGOST
+( 43304,  42531] |* 
+( 42531,  41758] | 
+( 41758,  40985] | 
+( 40985,  40212] | 
+( 40212,  39439] |**** 
+( 39439,  38666] |** 
+( 38666,  37893] |**** 
+( 37893,  37120] |****** 
+( 37120,  36347] |***** 
+( 36347,  35574] |***** 
+( 35574,  34801] |** 
+( 34801,  34028] |***** 
+( 34028,  33255] |** 
+( 33255,  32482] |**** 
+( 32482,  31709] |***** 
+( 31709,  30936] |*** 
+( 30936,  30163] |**** 
+( 30163,  29390] |*** 
+( 29390,  28617] |**** 
+( 28617,  27844] |***** 
+
