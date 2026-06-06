@@ -168,9 +168,9 @@ reg LOAD,    LOAD_FP, custom0,  MISC_MEM,OP_IMM,  AUIPC,OP_IMM_32,      wide48b,
     //  kuznkdblsrl  Двойной сдвиг вправо на байт                      +     +      func3=0x4
     //  kuznkdblsll  Двойной сдвиг влево на байт                       +     +      func3=0x5
     //  >>> Zkmagma
-    //  magma32edf   Преобразование \(g[k](a_0)\)                      +            func3=0x6
-    //  magma64edrl  Преобразование \(G[k](a_1, a_0)\) (младший ключ)        +      func3=0x6
-    //  magma64edrh  Преобразование \(G[k](a_1, a_0)\) (старший ключ)        +      func3=0x7
+    //  magma32edf   Преобразование \(g[k](a_0)\)                      +            func3=0x7
+    //  magma64edrl  Преобразование \(G[k](a_1, a_0)\) (младший ключ)        +      func3=0x7
+    //  magma64edrh  Преобразование \(G[k](a_1, a_0)\) (старший ключ)        +      func7[5]=1 func3=0x7
     // two are of type I with ignored constant and the latter are R-type ones
     assign control_bus[`select_aluop_start+`select_aluop_bitcnt-1:`select_aluop_start] =
         {custom0, is_type_R, OP_32|OP_IMM_32, func7[5],func7[4],func7[2], func7[0], func3} & {`select_aluop_bitcnt{is_not_ALU_op}};
