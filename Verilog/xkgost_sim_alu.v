@@ -162,10 +162,11 @@ module alu(
         .data_block_out (r_inv_result)
     );
 
+    // Yosys v0.64 gives 11151 cell for cpu module
     wire [`XLEN:1] r64_fwd = r_fwd_result[128:65];
-    wire [`XLEN:1] r64_fwd_dblsrl = r_fwd_result[64:1];
-    wire [`XLEN:1] r64_inv = r_inv_result[128:65];
-    wire [`XLEN:1] r64_inv_dblsll = r_inv_result[64:1];;
+    wire [`XLEN:1] r64_fwd_dblsrl = 0;//r_fwd_result[64:1];
+    wire [`XLEN:1] r64_inv_dblsll = 0; //r_inv_result[128:65];
+    wire [`XLEN:1] r64_inv = r_inv_result[64:1];
 
     
     wire [`XLEN:1] magma_result;
